@@ -32,8 +32,6 @@ cpp_standard = 17
 base_nvcc_flags = [
 	"-O3",
 	f"-std=c++{cpp_standard}",
-	"--extended-lambda",
-	"--expt-relaxed-constexpr",
 	# The following definitions must be undefined
 	# since we need half-precision operation.
 	"-U__CUDA_NO_HALF_OPERATORS__",
@@ -44,8 +42,8 @@ base_nvcc_flags = [
 if os.name == "posix":
 	base_cflags = ["-O3", f"-std=c++{cpp_standard}"]
 	base_nvcc_flags += [
-		"-Xcompiler=-Wno-float-conversion",
-		"-Xcompiler=-fno-strict-aliasing",
+		'-Wno-float-conversion',
+		'-fno-strict-aliasing'
 	]
 elif os.name == "nt":
 	base_cflags = ["/O2", f"/std:c++{cpp_standard}"]
@@ -68,6 +66,7 @@ setup(
 				'bindings.cpp',
 			]],
 			include_dirs=[
+				"/usr/include/eigen3",
 				os.path.join(_src_path, 'include'),
 				os.path.join(_src_path, 'third_party', 'eigen'),
 			],
